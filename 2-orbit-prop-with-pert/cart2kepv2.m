@@ -1,4 +1,4 @@
-function [a,e,inc,Om,w,v,Tp,P] = cart2kepv2(rVec, vVec, mu)
+function [a,e,inc,Om,w,v,Tp,P,M] = cart2kepv2(rVec, vVec, mu)
 % Converts Cartesian coordinates to Keplerian orbital elements. 
 % 
 % Version 2 includes the time sine perigee and period.
@@ -19,6 +19,7 @@ function [a,e,inc,Om,w,v,Tp,P] = cart2kepv2(rVec, vVec, mu)
 % v = true anomoly [rad]
 % Tp = time of perigee passage [sec]
 % P = period [sec]
+% M = mean anomaly [rad]
 %
 % REFERENCES
 %

@@ -65,7 +65,7 @@ dEt = Ek - Ep;
 % Plot the change in total energy over time. 
 figure(1)
 plot(T, dEt - dEt(1))
-set(gca(), 'fontsize', 10)
+set(gca(), 'fontsize', 12)
 title("Change in Energy over Time", fontsize=15)
 xlabel("Time [s]", fontsize=14)
 ylabel("Change in Energy [km^2/s^2]", fontsize=14)

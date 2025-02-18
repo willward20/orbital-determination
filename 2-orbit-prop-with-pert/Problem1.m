@@ -57,10 +57,11 @@ Om_t = [];
 w_t = [];
 Tp_t = [];
 P_t = [];
+M_t = [];
 
 for ii = 1:length(R)
     % Get the orbital elements
-    [a,e,inc,Om,w,v,Tp,P] = cart2kepv2(R(ii,:)', V(ii,:)', mu);
+    [a,e,inc,Om,w,v,Tp,P,M] = cart2kepv2(R(ii,:)', V(ii,:)', mu);
     a_t = [a_t; a];
     e_t = [e_t; e];
     inc_t = [inc_t; inc];
@@ -68,6 +69,7 @@ for ii = 1:length(R)
     w_t = [w_t; w];
     Tp_t = [Tp_t; Tp];
     P_t = [P_t; P];
+    M_t = [M_t; M];
 end
 
 % Plot the results.
@@ -75,6 +77,8 @@ figure(1)
 subplot(6,1,1)
 sgtitle('Orbital Elements Over Time (Two-Body + J2 Kinematics)', fontweight='bold')
 plot(T,a_t)
+hold on
+xline(P_t(1)*[1:12])
 ax = gca;
 ax.XAxis.FontSize = 12;
 ax.YAxis.FontSize = 12;
@@ -82,6 +86,8 @@ ylabel('a_t [km]', fontsize=14, fontweight='bold')
 grid on
 subplot(6,1,2)
 plot(T,e_t)
+hold on
+xline(P_t(1)*[1:12])
 ax = gca;
 ax.XAxis.FontSize = 12;
 ax.YAxis.FontSize = 12;
@@ -89,6 +95,8 @@ ylabel('e', fontsize=14, fontweight='bold')
 grid on
 subplot(6,1,3)
 plot(T,inc_t)
+hold on
+xline(P_t(1)*[1:12])
 ax = gca;
 ax.XAxis.FontSize = 12;
 ax.YAxis.FontSize = 12;
@@ -96,6 +104,8 @@ ylabel('inc [rad]', fontsize=14, fontweight='bold')
 grid on
 subplot(6,1,4)
 plot(T,Om_t)
+hold on
+xline(P_t(1)*[1:12])
 ax = gca;
 ax.XAxis.FontSize = 12;
 ax.YAxis.FontSize = 12;
@@ -103,6 +113,8 @@ ylabel('Om [rad]', fontsize=14, fontweight='bold')
 grid on
 subplot(6,1,5)
 plot(T,w_t)
+hold on
+xline(P_t(1)*[1:12])
 ax = gca;
 ax.XAxis.FontSize = 12;
 ax.YAxis.FontSize = 12;
@@ -110,6 +122,8 @@ ylabel('w [rad]', fontsize=14, fontweight='bold')
 grid on
 subplot(6,1,6)
 plot(T,Tp_t)
+hold on
+xline(P_t(1)*[1:12])
 ax = gca;
 ax.XAxis.FontSize = 12;
 ax.YAxis.FontSize = 12;
@@ -131,7 +145,7 @@ dEt = Ek - Ep;
 % Plot the change in total energy over time. 
 figure(2)
 plot(T, dEt - dEt(1))
-set(gca(), 'fontsize', 10)
+set(gca(), 'fontsize', 12)
 title("Change in Energy over Time", fontsize=15)
 xlabel("Time [s]", fontsize=14)
 ylabel("Change in Energy [km^2/s^2]", fontsize=14)
@@ -145,9 +159,9 @@ h = cross(R, V, 2);
 figure(3)
 plot(T, h(:,3)-h(1,3))
 set(gca(), 'fontsize', 12)
-title("Angular Momentum over Time", fontsize=18)
-xlabel("Time [s]", fontsize=14, fontweight='bold')
-ylabel("h_z [km^2/s]", fontsize=14, fontweight='bold')
+title("Angular Momentum over Time", fontsize=15)
+xlabel("Time [s]", fontsize=14)
+ylabel("h_z [km^2/s]", fontsize=14)
 
 % Extra Plots
 % % Plot the orbit in 3D.
