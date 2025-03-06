@@ -1,51 +1,4 @@
 %% IAU-76/FK5 reduction of position from ECEF (ITRF) to ECI (GCRF)
-% Define position and velocity in ECEF (ITRF).
-rECEF = [-1033.4793830; 7901.2952754; 6380.3565958]; % [km]
-vECEF = [-3.225636520; -2.872451450; 5.531924446]; % [km/s]
-
-% Define position and velocity in ECI (GCRF).
-% Earth Centered Inertial (ECI). 
-rGCRF = [5102.508958; 6123.011401; 6378.136928]; % [km]
-vGCRF = [-4.74322016; 0.79053650; 5.53375528]; % [km/s]
-
-% Final time (UTC).
-year = 2004;
-month = 4;
-day = 6;
-hour = 7;
-minute = 51;
-second = 28.386009;
-
-% Create a datetime variable.
-dateTimeUTC = datetime(year,month,day,hour,minute,second);
-
-% DUT1 value for April 6, 2004 reported in "finalls.all.csv" by the IERS. 
-% DUT1 = -0.4399498; 
-
-% Convert UTC to UT1.
-dateTimeUT1 = dateTimeUTC;
-dateTimeUT1.Second = dateTimeUTC + DUT1; 
-
-% NOTE: you need to do more conversions here (see Vallado ex. 3-15 p, 230). 
-
-% Convert Calendart Date + UT1 time into Julian date using this online
-% convertor to start with https://aa.usno.navy.mil/calculated/juliandate?ID=AA&date=2004-04-06&era=AD&time=07%3A51%3A27.900&submit=Get+Date 
-JDUT1 = 2453101.827406; % Julian Date in UT1 time.
-% Here's an equation from Vallado Algorithm 14
-% JDUT1 = 367*year - (7*(year + ((month+9)/12))/4) ...
-%         + (275*month/9) + day + 1721013.5 ...
-%         + (((UT1second/60) + minute)/60 + hour)/24;
-
-% Convert the Julian date (JDUT1) to Greenwich Mean Sidereal Time (GMST)
-% using a function provided by the TA. 
-GMST = JD2GMST(JDUT1);
-
-% Define the nutation in longitude.
-del_nu = 0.0;
-
-
-
-%%
 clear all 
 clc
 
@@ -328,8 +281,8 @@ R323 = [ cos(theta)*cos(z)*cos(eta) - sin(z)*sin(eta),  sin(z)*cos(theta)*cos(et
         -sin(eta)*cos(theta)*cos(z) - sin(z)*cos(eta), -sin(z)*sin(eta)*cos(theta) + cos(z)*cos(eta), -sin(theta)*sin(eta)
         -sin(theta)*cos(z),                            -sin(theta)*sin(z)                              cos(theta)];
 
-rGCRFcalc = R323*rmod;
-vGCRFcalc = R323*vmod;
+rGCRFcalc = R323*rMOD;
+vGCRFcalc = R323*vMOD;
 
 % Check for errors in final calcualted GCRF values.
 disp("Check for final errors ============================================")
