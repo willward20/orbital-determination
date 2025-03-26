@@ -3,4 +3,6 @@
 *.mat
 4-ref-frame-transformations/*.csv
 4-ref-frame-transformations/*.txt
+*.dat
+*.xlsx
 
