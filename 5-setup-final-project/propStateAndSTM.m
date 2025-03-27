@@ -1,4 +1,5 @@
-function dXdt = propStateAndSTM(t, X, AMat_func, interp_rsun, interp_rmoon)
+function dXdt = propSTM(t, X, AMat_func, dUdx_func, dUdy_func, ...
+    dUdz_func, interp_rsun, interp_rmoon)
 % Propagates the kinematics and STM of 2B+J2+Drag
 % kinematic equations for a satellite. 
 %
@@ -26,9 +27,16 @@ function dXdt = propStateAndSTM(t, X, AMat_func, interp_rsun, interp_rmoon)
         rmoon(1), rmoon(2), rmoon(3), rsun(1), rsun(2), rsun(3));
 
     % Compute the derivative for the states and STM. 
-    dStatesdt = AMat*[R;V;C_D];
+    % dStatesdt = AMat*[R;V;C_D];
+    dR = V;
+    dVx = dUdx_func(R(1), R(2), R(3), V(1), V(2), V(3), ...
+        rmoon(1), rmoon(2), rmoon(3), rsun(1), rsun(2), rsun(3));
+    dVy = dUdy_func(R(1), R(2), R(3), V(1), V(2), V(3), ...
+        rmoon(1), rmoon(2), rmoon(3), rsun(1), rsun(2), rsun(3));
+    dVz = dUdz_func(R(1), R(2), R(3), V(1), V(2), V(3), ...
+        rmoon(1), rmoon(2), rmoon(3), rsun(1), rsun(2), rsun(3));
     dSTMdt = AMat*STM;
 
     % Reshape into the output derivative vector.
-    dXdt = [dStatesdt; reshape(dSTMdt, 49, 1)];
+    dXdt = [dR; dVx; dVy; dVz; 0; reshape(dSTMdt, 49, 1)];
 end
